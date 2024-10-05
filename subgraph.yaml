@@ -1,0 +1,29 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: SimpleToken
+    network: mainnet
+    source:
+      address: "0x4d224452801ACEd8B2F0aebE155379bb5D594381"
+      abi: SimpleToken
+      startBlock: 14204533
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Transfer
+      abis:
+        - name: SimpleToken
+          file: ./abis/SimpleToken.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/simple-token.ts
